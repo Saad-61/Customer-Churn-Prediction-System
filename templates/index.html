@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Intelligence Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom SaaS CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-black text-light">
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-secondary border-opacity-25 px-4 py-3 sticky-top">
+        <div class="container-fluid px-0">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-white fs-4" href="#">
+                <i class="fa-solid fa-crown text-warning fs-3"></i> 
+                <span>Churn<span class="text-gold-gradient">Shield</span> Enterprise</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <span id="api-status-badge" class="badge rounded-pill bg-dark text-warning border border-warning px-3 py-2">
+                    <span class="pulse-gold me-1"></span> API Operational
+                </span>
+                <span class="text-secondary small">v1.0.0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid px-4 py-4">
+        
+        <!-- Header Banner -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="header-banner p-4 rounded-3">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h3 class="fw-bold mb-1 text-white">Customer Churn Prediction System</h3>
+                            <p class="text-secondary mb-0">Production Machine Learning Engine with XGBoost Inference, Feature Engineering & Real-Time Risk Analytics</p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                            <button id="btn-load-high-risk" class="btn btn-outline-custom-danger btn-sm rounded-2 me-2">
+                                <i class="fa-solid fa-user-xmark me-1"></i> Preset: High Risk Profile
+                            </button>
+                            <button id="btn-load-low-risk" class="btn btn-outline-custom-success btn-sm rounded-2">
+                                <i class="fa-solid fa-user-check me-1"></i> Preset: Low Risk Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Input Parameters Form -->
+            <div class="col-xl-7 col-lg-6">
+                <div class="saas-card h-100">
+                    <div class="saas-card-header d-flex justify-content-between align-items-center">
+                        <h5 class="fw-semibold mb-0 text-white fs-6">
+                            <i class="fa-solid fa-sliders text-warning me-2"></i> Customer Profile Input Attributes
+                        </h5>
+                        <span class="badge bg-dark text-warning border border-warning border-opacity-25">21 Telco Parameters</span>
+                    </div>
+
+                    <div class="p-4">
+                        <form id="churn-form">
+                            <!-- Demographics Section -->
+                            <div class="mb-4">
+                                <div class="section-label">1. Demographics & Account Overview</div>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Customer ID</label>
+                                        <input type="text" class="form-control" id="customer_id" value="CUST-88392" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Tenure (Months)</label>
+                                        <input type="number" class="form-control" id="tenure" min="0" max="100" value="2" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select" id="gender">
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Senior Citizen</label>
+                                        <select class="form-select" id="senior_citizen">
+                                            <option value="0">No (Under 65)</option>
+                                            <option value="1">Yes (65+)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Partner</label>
+                                        <select class="form-select" id="partner">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Dependents</label>
+                                        <select class="form-select" id="dependents">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Services Subscribed Section -->
+                            <div class="mb-4">
+                                <div class="section-label">2. Phone & Internet Services</div>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Internet Service</label>
+                                        <select class="form-select" id="internet_service">
+                                            <option value="Fiber optic" selected>Fiber Optic</option>
+                                            <option value="DSL">DSL</option>
+                                            <option value="No">No Internet</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Phone Service</label>
+                                        <select class="form-select" id="phone_service">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Multiple Lines</label>
+                                        <select class="form-select" id="multiple_lines">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No phone service">No Phone Service</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Online Security</label>
+                                        <select class="form-select" id="online_security">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Online Backup</label>
+                                        <select class="form-select" id="online_backup">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Tech Support</label>
+                                        <select class="form-select" id="tech_support">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Device Protection</label>
+                                        <select class="form-select" id="device_protection">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Streaming TV</label>
+                                        <select class="form-select" id="streaming_tv">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Streaming Movies</label>
+                                        <select class="form-select" id="streaming_movies">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Billing & Contract Section -->
+                            <div class="mb-4">
+                                <div class="section-label">3. Billing & Contract Terms</div>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Contract Type</label>
+                                        <select class="form-select" id="contract">
+                                            <option value="Month-to-month" selected>Month-to-month</option>
+                                            <option value="One year">One year</option>
+                                            <option value="Two year">Two year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Payment Method</label>
+                                        <select class="form-select" id="payment_method">
+                                            <option value="Electronic check" selected>Electronic check</option>
+                                            <option value="Mailed check">Mailed check</option>
+                                            <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                            <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Paperless Billing</label>
+                                        <select class="form-select" id="paperless_billing">
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Monthly Charges ($)</label>
+                                        <input type="number" step="0.01" class="form-control" id="monthly_charges" value="94.85" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Total Charges ($)</label>
+                                        <input type="number" step="0.01" class="form-control" id="total_charges" value="189.70" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-gold-primary btn-lg py-3">
+                                    Compute Churn Probability Score
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Real-time Analytics Dashboard -->
+            <div class="col-xl-5 col-lg-6">
+                <div class="saas-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="saas-card-header d-flex justify-content-between align-items-center">
+                            <h5 class="fw-semibold mb-0 text-white fs-6">
+                                <i class="fa-solid fa-chart-line text-warning me-2"></i> Risk Assessment & Analytics
+                            </h5>
+                            <span id="model-name-tag" class="badge bg-dark text-warning border border-warning border-opacity-25">Tuned XGBoost</span>
+                        </div>
+
+                        <div class="p-4">
+                            <!-- Gauge Card -->
+                            <div class="text-center p-4 rounded-3 bg-black border border-secondary border-opacity-25 mb-4">
+                                <div class="gauge-container mb-3 position-relative mx-auto" style="width: 170px; height: 170px;">
+                                    <svg viewBox="0 0 100 100" class="gauge-svg">
+                                        <path class="gauge-bg" d="M 20 80 A 40 40 0 1 1 80 80" fill="none" stroke-width="10" stroke-linecap="round"/>
+                                        <path id="gauge-fill" class="gauge-fill" d="M 20 80 A 40 40 0 1 1 80 80" fill="none" stroke="#ef4444" stroke-width="10" stroke-dasharray="188.4" stroke-dashoffset="188.4" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="gauge-value position-absolute top-50 start-50 translate-middle text-center">
+                                        <span id="prob-percentage" class="fs-1 fw-bold text-white">0%</span>
+                                        <div class="small text-secondary text-uppercase fs-7">Risk Score</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <span id="risk-badge" class="badge rounded-pill fs-6 px-4 py-2 bg-secondary text-white">Awaiting Input</span>
+                                </div>
+
+                                <p id="prediction-summary" class="text-secondary mb-0 small">
+                                    Submit a profile to execute real-time model inference.
+                                </p>
+                            </div>
+
+                            <!-- Prescriptive Recommendation Card -->
+                            <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4">
+                                <h6 class="text-warning fw-semibold mb-2 fs-7 text-uppercase">
+                                    <i class="fa-solid fa-lightbulb me-1"></i> Prescriptive Action Recommendation
+                                </h6>
+                                <p id="recommendation-text" class="text-light mb-0 small">
+                                    Fill form fields and click "Compute Churn Probability Score".
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Benchmark Table -->
+                    <div class="p-4 pt-0">
+                        <div class="section-label">Model Performance Benchmarks</div>
+                        <div class="table-responsive">
+                            <table class="table table-custom table-sm align-middle small mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Model Classifier</th>
+                                        <th class="text-center">Accuracy</th>
+                                        <th class="text-center">Recall</th>
+                                        <th class="text-center">ROC-AUC</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Logistic Regression</td>
+                                        <td class="text-center">80.8%</td>
+                                        <td class="text-center">57.2%</td>
+                                        <td class="text-center">0.855</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Random Forest</td>
+                                        <td class="text-center">78.9%</td>
+                                        <td class="text-center">51.1%</td>
+                                        <td class="text-center">0.833</td>
+                                    </tr>
+                                    <tr class="table-highlight">
+                                        <td>Tuned XGBoost ⭐</td>
+                                        <td class="text-center">81.1%</td>
+                                        <td class="text-center">49.5%</td>
+                                        <td class="text-center">0.857</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: SQLite Prediction Audit Log -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="saas-card">
+                    <div class="saas-card-header d-flex justify-content-between align-items-center">
+                        <h5 class="fw-semibold mb-0 text-white fs-6">
+                            <i class="fa-solid fa-database text-warning me-2"></i> Real-Time Prediction Audit Log (SQLite Database)
+                        </h5>
+                        <button id="btn-refresh-history" class="btn btn-outline-secondary btn-sm rounded-2">
+                            <i class="fa-solid fa-rotate me-1"></i> Refresh History
+                        </button>
+                    </div>
+
+                    <div class="p-3">
+                        <div class="table-responsive">
+                            <table class="table table-custom table-hover align-middle mb-0 small">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Timestamp</th>
+                                        <th>Customer ID</th>
+                                        <th>Tenure</th>
+                                        <th>Contract</th>
+                                        <th>Monthly ($)</th>
+                                        <th>Internet</th>
+                                        <th>Probability</th>
+                                        <th>Risk Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-table-body">
+                                    <tr>
+                                        <td colspan="9" class="text-center text-muted py-3">No predictions logged yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Frontend App JS -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

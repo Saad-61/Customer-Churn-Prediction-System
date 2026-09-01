@@ -1,0 +1,196 @@
+/* Luxury Black, Charcoal Grey & Gold Enterprise SaaS Design System */
+:root {
+    --bg-black: #09090b;
+    --bg-dark-charcoal: #121215;
+    --card-bg: #18181b;
+    --card-header-bg: #27272a;
+    --border-color: #27272a;
+    --border-light: #3f3f46;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    
+    --gold-primary: #f59e0b;
+    --gold-metallic: #d4af37;
+    --gold-dark: #b45309;
+    --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d4af37 100%);
+    
+    --emerald-secondary: #10b981;
+    --cyan-secondary: #06b6d4;
+    --danger-rose: #ef4444;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Gold Gradient Text */
+.text-gold-gradient {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Solid Charcoal Card */
+.saas-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+.saas-card-header {
+    background-color: rgba(39, 39, 42, 0.4);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.header-banner {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--gold-primary);
+}
+
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-primary);
+    margin-bottom: 0.75rem;
+}
+
+/* Gold Form Controls */
+.form-control, .form-select {
+    background-color: #09090b !important;
+    border: 1px solid var(--border-light) !important;
+    color: #ffffff !important;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.875rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--gold-primary) !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25) !important;
+    background-color: #09090b !important;
+}
+
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+}
+
+/* Gold Primary Button */
+.btn-gold-primary {
+    background: var(--gold-gradient);
+    color: #000000;
+    border: none;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+.btn-gold-primary:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+    transform: translateY(-1px);
+}
+
+/* Custom Preset Buttons */
+.btn-outline-custom-danger {
+    color: #f87171;
+    border-color: #7f1d1d;
+    background-color: rgba(127, 29, 29, 0.15);
+}
+
+.btn-outline-custom-danger:hover {
+    background-color: #991b1b;
+    color: #ffffff;
+}
+
+.btn-outline-custom-success {
+    color: #34d399;
+    border-color: #064e3b;
+    background-color: rgba(6, 78, 59, 0.15);
+}
+
+.btn-outline-custom-success:hover {
+    background-color: #065f46;
+    color: #ffffff;
+}
+
+/* Gauge Meter SVG */
+.gauge-bg {
+    stroke: #27272a;
+}
+
+.gauge-fill {
+    transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s ease;
+}
+
+/* High Contrast Tables */
+.table-custom {
+    --bs-table-bg: transparent;
+    --bs-table-color: #f4f4f5;
+}
+
+.table-custom th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+}
+
+.table-custom td {
+    padding: 0.75rem 1rem;
+    color: #f4f4f5;
+    border-bottom: 1px solid rgba(39, 39, 42, 0.8);
+}
+
+/* Fix Bootstrap .table-active dark text override */
+.table-custom tr.table-highlight,
+.table-custom tr.table-active {
+    background-color: rgba(245, 158, 11, 0.18) !important;
+}
+
+.table-custom tr.table-highlight td,
+.table-custom tr.table-active td {
+    color: #fbbf24 !important;
+    font-weight: 700 !important;
+}
+
+/* Pulse Gold Indicator */
+.pulse-gold {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--gold-primary);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    animation: pulse-gold-anim 1.8s infinite;
+}
+
+@keyframes pulse-gold-anim {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}

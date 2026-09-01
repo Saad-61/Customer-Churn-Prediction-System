@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  churn-prediction-system:
+    build: .
+    container_name: churn_prediction_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    restart: always
